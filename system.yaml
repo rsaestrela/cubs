@@ -1,0 +1,29 @@
+version: "0.1"
+description: "My SOA"
+
+cubs:
+  - id: "Service 1"
+    path: "service1"
+    dependsOn:
+      - module: "service2"
+        communication: "queue"
+    scripts:
+      start: "start_script"
+      stop: "stop_script"
+
+  - id: "Service 2"
+    path: "service2"
+    dependsOn:
+      - module: "service1"
+        method: "swagger"
+    scripts:
+      start: "start_script"
+      stop: "stop_script"
+
+services:
+  - id: "queue1"
+    type: "activemq"
+    before: "script"
+    startup: "script"
+    shutdown: "script"
+
